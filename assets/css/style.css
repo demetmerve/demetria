@@ -1,0 +1,453 @@
+/* ---------- Temel Renk ve Değerler ---------- */
+:root {
+  --bg: #0f1115;
+  --panel: #151821;
+  --muted: #8a90a2;
+  --text: #e9ecf1;
+  --brand: #7aa2ff;
+  --brand-2: #b087f8;
+  --accent: #a7f3d0;
+  --line: #242736;
+  --radius: 16px;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* ---------- Temel Gövde ---------- */
+body {
+  margin: 0;
+  font-family: Inter, system-ui, sans-serif;
+  color: var(--text);
+  background-color: var(--bg);
+  background-image: url("../img/A_website_design_for_an_architectural_portfolio_na.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+/* ---------- Container ve Sayfa ---------- */
+.container {
+  width: min(1120px, 92%);
+  margin-inline: auto;
+}
+
+.page {
+  display: none;
+  padding: 64px 0 80px;
+}
+
+:target.page {
+  display: block;
+}
+
+body:not(:has(:target)) #home.page {
+  display: block;
+}
+
+/* ---------- Header ve Navigasyon ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+  background: color-mix(in oklab, var(--bg), transparent 50%);
+  border-bottom: 1px solid var(--line);
+}
+
+.header-wrap {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 14px 0;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, var(--brand), var(--brand-2));
+  color: #0c0f16;
+  font-weight: 800;
+}
+
+.brand-name {
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.nav {
+  margin-left: auto;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.nav a {
+  text-decoration: none;
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+}
+
+.nav a:hover {
+  background: #1a1e2a;
+  border-color: #2a2f42;
+}
+
+.nav a.cta {
+  background: linear-gradient(145deg, var(--brand), var(--brand-2));
+  color: #0c0f16;
+  font-weight: 700;
+}
+
+/* ---------- Mobil Menü ---------- */
+#menu-toggle {
+  display: none;
+}
+
+.burger {
+  display: none;
+  width: 28px;
+  height: 22px;
+  cursor: pointer;
+  position: relative;
+}
+
+.burger::before,
+.burger::after,
+.burger {
+  content: "";
+  background-color: var(--text);
+  height: 3px;
+  width: 100%;
+  display: block;
+  border-radius: 2px;
+  position: absolute;
+  left: 0;
+  transition: 0.3s ease;
+}
+
+.burger::before {
+  top: 0;
+}
+
+.burger::after {
+  bottom: 0;
+}
+
+.burger {
+  top: 9px;
+}
+
+@media (max-width: 880px) {
+  .nav {
+    position: fixed;
+    inset: 64px 0 auto 0;
+    background: var(--panel);
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    gap: 8px;
+    padding: 14px;
+    transform: translateY(-120%);
+    transition: 0.25s ease;
+  }
+
+  #menu-toggle:checked ~ .nav {
+    transform: translateY(0);
+  }
+
+  .burger {
+    display: block;
+    margin-left: auto;
+  }
+
+  .nav a {
+    padding: 12px 14px;
+  }
+}
+
+/* ---------- Slideshow ---------- */
+.slideshow {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid #2a2f42;
+  box-shadow: var(--shadow);
+  aspect-ratio: 16 / 9;
+  margin-top: 24px;
+  --slide-duration: 5s;
+  --count: 10;
+  --total: calc(var(--count) * var(--slide-duration));
+}
+
+.slides {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  animation: fadeShow var(--total) linear infinite;
+  animation-delay: var(--delay);
+  will-change: opacity, transform;
+}
+
+.slide figure {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.02);
+}
+
+.slide figcaption {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  padding: 10px 14px;
+  background: color-mix(in oklab, #0b0f16, transparent 35%);
+  border: 1px solid #2a2f42;
+  backdrop-filter: blur(6px);
+  border-radius: 12px;
+  font-size: clamp(14px, 2.3vw, 16px);
+  color: var(--text);
+}
+
+.slide figcaption strong {
+  font-weight: 800;
+}
+
+.slideshow:hover .slide {
+  animation-play-state: paused;
+}
+
+@keyframes fadeShow {
+  0%, 4% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+
+  5%, 25% {
+    opacity: 1;
+    transform: scale(1.0);
+  }
+
+  30%, 100% {
+    opacity: 0;
+    transform: scale(1.02);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide {
+    animation: none;
+    opacity: 1;
+  }
+
+  .slide:not(:first-child) {
+    display: none;
+  }
+}
+
+.slides .slide:first-child {
+  opacity: 1;
+}
+
+/* ---------- Sayfa Başlıkları ---------- */
+.page-head h2 {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(28px, 3.6vw, 44px);
+  margin: 0 0 10px;
+}
+
+.page-head p {
+  color: var(--muted);
+  margin: 0 0 24px;
+}
+
+/* ---------- Timeline ---------- */
+.timeline {
+  display: grid;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.tick {
+  padding: 14px;
+  border-left: 3px solid var(--brand);
+  background: #121622;
+  border-radius: 8px;
+}
+
+.tick h4 {
+  margin: 0 0 6px;
+}
+
+.tick p {
+  margin: 0;
+  color: var(--muted);
+}
+
+/* ---------- Grid Kartlar ---------- */
+.feature-grid,
+.style-grid,
+.arch-grid,
+.portfolio-grid {
+  display: grid;
+  gap: 16px;
+  margin-top: 24px;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+.card,
+.style-card,
+.arch-card,
+.work {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: var(--shadow);
+}
+
+.card {
+  grid-column: span 4;
+}
+
+.style-card,
+.arch-card {
+  grid-column: span 3;
+}
+
+.work {
+  grid-column: span 4;
+  overflow: hidden;
+}
+
+.thumb {
+  height: 180px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  background:
+    linear-gradient(120deg, #212637, #161a26),
+    repeating-linear-gradient(45deg, #1f2434 0 6px, #192033 6px 12px);
+  border: 1px solid #2a2f42;
+}
+
+.chip {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 14px;
+  text-decoration: none;
+  background: #1a1e2a;
+  color: var(--text);
+  border: 1px solid #2a2f42;
+}
+
+/* ---------- Hakkımda ---------- */
+.about {
+  margin-top: 8px;
+  padding: 18px;
+  background: #121622;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--text);
+}
+
+/* ---------- Form ---------- */
+.contact-form {
+  display: grid;
+  gap: 14px;
+  max-width: 640px;
+}
+
+.contact-form label {
+  display: grid;
+  gap: 6px;
+  font-weight: 600;
+}
+
+.contact-form input,
+.contact-form textarea {
+  background: #121622;
+  color: var(--text);
+  border: 1px solid #2a2f42;
+  border-radius: 12px;
+  padding: 12px;
+  outline: none;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: var(--brand);
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  border-top: 1px solid var(--line);
+  margin-top: 40px;
+}
+
+.footer-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 0;
+  color: var(--muted);
+}
+
+.to-top {
+  text-decoration: none;
+  color: var(--text);
+  border: 1px solid #2a2f42;
+  padding: 6px 10px;
+  border-radius: 10px;
+}
+
+/* ---------- Responsive Grid ---------- */
+@media (max-width: 1024px) {
+  .card,
+  .style-card,
+  .arch-card,
+  .work {
+    grid-column: span 6;
+  }
+}
+
+@media (max-width: 640px) {
+  .card,
+  .style-card,
+  .arch-card,
+  .work {
+    grid-column: 1 / -1;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
